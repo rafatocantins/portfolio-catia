@@ -83,7 +83,7 @@ export const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050303]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* SVG geometric grid background with perspective */}
       <svg
