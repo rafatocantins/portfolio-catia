@@ -3,36 +3,29 @@
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 
-interface ShapeConfig {
-  type: 'circle' | 'triangle' | 'hexagon' | 'diamond' | 'ring';
+interface WireShape {
+  type: 'circle' | 'triangle' | 'hexagon' | 'diamond' | 'cross' | 'arc' | 'spiral';
   x: number;
   y: number;
   size: number;
   rotation: number;
-  fillOpacity: number;
-  strokeOpacity: number;
+  strokeWidth: number;
+  opacity: number;
   floatDuration: number;
   floatDelay: number;
-  pulseDuration: number;
-  pulseDelay: number;
   rotateDuration: number;
-  blur: number;
+  dashArray: string;
 }
 
-interface Connector {
-  from: number;
-  to: number;
-}
-
-function generateShapes(count: number): { shapes: ShapeConfig[]; connectors: Connector[] } {
-  const types = ['circle', 'triangle', 'hexagon', 'diamond', 'ring'] as const;
-  const shapes: ShapeConfig[] = [];
+function generateShapes(count: number): WireShape[] {
+  const types: WireShape['type'][] = ['circle', 'triangle', 'hexagon', 'diamond', 'cross', 'arc', 'spiral'];
+  const shapes: WireShape[] = [];
 
   for (let i = 0; i < count; i++) {
     const t = i / count;
     const x = ((Math.sin(i * 7.3 + 1.1) * 0.5 + 0.5) * 88 + 6);
     const y = ((Math.cos(i * 5.7 + 2.3) * 0.5 + 0.5) * 88 + 6);
-    const size = 30 + ((Math.sin(i * 11.1 + 3.7) * 0.5 + 0.5) * 180);
+    const size = 30 + ((Math.sin(i * 11.1 + 3.7) * 0.5 + 0.5) * 200);
 
     shapes.push({
       type: types[i % types.length],
@@ -40,41 +33,25 @@ function generateShapes(count: number): { shapes: ShapeConfig[]; connectors: Con
       y: Math.round(y * 10) / 10,
       size: Math.round(size),
       rotation: Math.round(((i * 37 + 13) % 360) * 10) / 10,
-      // Muito mais visivel: 0.08 a 0.25
-      fillOpacity: Math.round((0.08 + (Math.sin(i * 2.3) * 0.5 + 0.5) * 0.17) * 1000) / 1000,
-      strokeOpacity: Math.round((0.15 + (Math.cos(i * 3.1) * 0.5 + 0.5) * 0.25) * 1000) / 1000,
-      floatDuration: 12 + ((i * 7 + 3) % 14),
-      floatDelay: ((i * 1.8) % 4) * -1,
-      pulseDuration: 3 + ((i * 2.5) % 4),
-      pulseDelay: ((i * 1.2) % 2.5) * -1,
-      rotateDuration: 18 + ((i * 5 + 7) % 26),
-      blur: Math.round((Math.sin(i * 4.1) * 0.5 + 0.5) * 3 * 10) / 10,
+      strokeWidth: 0.5 + (i % 3) * 0.5,
+      opacity: Math.round((0.08 + (Math.sin(i * 2.3) * 0.5 + 0.5) * 0.2) * 1000) / 1000,
+      floatDuration: 14 + ((i * 7 + 3) % 16),
+      floatDelay: ((i * 1.8) % 5) * -1,
+      rotateDuration: 22 + ((i * 5 + 7) % 28),
+      dashArray: i % 3 === 0 ? `${6 + (i % 4) * 4} ${4 + (i % 3) * 3}` : 'none',
     });
   }
 
-  // Criar conectores entre formas proximas (efeito constelacao)
-  const connectors: Connector[] = [];
-  for (let i = 0; i < shapes.length; i++) {
-    for (let j = i + 1; j < shapes.length; j++) {
-      const dx = shapes[i].x - shapes[j].x;
-      const dy = shapes[i].y - shapes[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 25) {
-        connectors.push({ from: i, to: j });
-      }
-    }
-  }
-
-  return { shapes, connectors };
+  return shapes;
 }
 
-function Shape({ config }: { config: ShapeConfig }) {
-  const { type, x, y, size, rotation, fillOpacity, strokeOpacity, blur } = config;
+function WireShape({ config }: { config: WireShape }) {
+  const { type, x, y, size, rotation, strokeWidth, opacity, dashArray } = config;
   const accent = '#FFD527';
 
   const floatAnimation = useMemo(() => ({
-    y: [0, -20, 0, 14, 0],
-    x: [0, 8, 0, -10, 0],
+    y: [0, -16, 0, 12, 0],
+    x: [0, 6, 0, -8, 0],
     transition: {
       duration: config.floatDuration,
       repeat: Infinity,
@@ -84,71 +61,61 @@ function Shape({ config }: { config: ShapeConfig }) {
   }), [config.floatDuration, config.floatDelay]);
 
   const rotateAnimation = useMemo(() => ({
-    rotate: [rotation, rotation + 360],
+    rotate: [rotation, rotation + (config.type === 'spiral' ? 720 : 360)],
     transition: {
       duration: config.rotateDuration,
       repeat: Infinity,
       ease: 'linear' as const,
     },
-  }), [rotation, config.rotateDuration]);
+  }), [rotation, config.rotateDuration, config.type]);
 
   const opacityAnimation = useMemo(() => ({
-    opacity: [fillOpacity, fillOpacity * 1.6, fillOpacity],
+    opacity: [opacity, opacity * 1.8, opacity],
     transition: {
-      duration: config.pulseDuration,
+      duration: 5 + (config.size % 6),
       repeat: Infinity,
       ease: 'easeInOut' as const,
-      delay: config.pulseDelay,
+      delay: config.floatDelay,
     },
-  }), [fillOpacity, config.pulseDuration, config.pulseDelay]);
-
-  const scaleAnimation = useMemo(() => ({
-    scale: [1, 1.12, 1],
-    transition: {
-      duration: config.pulseDuration * 1.3,
-      repeat: Infinity,
-      ease: 'easeInOut' as const,
-      delay: config.pulseDelay + 1,
-    },
-  }), [config.pulseDuration, config.pulseDelay]);
+  }), [opacity, config.floatDelay, config.size]);
 
   const renderShape = () => {
+    const s = size;
+    const cx = s / 2;
+    const cy = s / 2;
+
     switch (type) {
       case 'circle':
         return (
           <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={size / 2}
-            fill={accent}
-            fillOpacity={fillOpacity}
+            cx={cx} cy={cy} r={s / 2 - strokeWidth}
+            fill="none"
             stroke={accent}
-            strokeOpacity={strokeOpacity}
-            strokeWidth={1.5}
+            strokeWidth={strokeWidth}
+            strokeOpacity={opacity}
+            strokeDasharray={dashArray !== 'none' ? dashArray : undefined}
           />
         );
 
       case 'triangle': {
-        const h = size;
-        const w = size * 0.866;
-        const cx = w / 2;
-        const points = `${cx},0 ${w},${h} 0,${h}`;
+        const h = s;
+        const w = s * 0.866;
+        const cx2 = w / 2;
+        const pts = `${cx2},${strokeWidth} ${w - strokeWidth},${h - strokeWidth} ${strokeWidth},${h - strokeWidth}`;
         return (
           <polygon
-            points={points}
-            fill={accent}
-            fillOpacity={fillOpacity}
+            points={pts}
+            fill="none"
             stroke={accent}
-            strokeOpacity={strokeOpacity}
-            strokeWidth={1.5}
+            strokeWidth={strokeWidth}
+            strokeOpacity={opacity}
+            strokeDasharray={dashArray !== 'none' ? dashArray : undefined}
           />
         );
       }
 
       case 'hexagon': {
-        const cx = size / 2;
-        const cy = size / 2;
-        const r = size / 2;
+        const r = s / 2 - strokeWidth;
         const pts: string[] = [];
         for (let i = 0; i < 6; i++) {
           const angle = (Math.PI / 3) * i - Math.PI / 6;
@@ -157,43 +124,61 @@ function Shape({ config }: { config: ShapeConfig }) {
         return (
           <polygon
             points={pts.join(' ')}
-            fill={accent}
-            fillOpacity={fillOpacity}
+            fill="none"
             stroke={accent}
-            strokeOpacity={strokeOpacity}
-            strokeWidth={1.5}
+            strokeWidth={strokeWidth}
+            strokeOpacity={opacity}
           />
         );
       }
 
       case 'diamond': {
-        const cx = size / 2;
-        const cy = size / 2;
-        const r = size / 2;
-        const points = `${cx},${cy - r} ${cx + r},${cy} ${cx},${cy + r} ${cx - r},${cy}`;
+        const r = s / 2 - strokeWidth;
+        const pts = `${cx},${cy - r} ${cx + r},${cy} ${cx},${cy + r} ${cx - r},${cy}`;
         return (
           <polygon
-            points={points}
-            fill={accent}
-            fillOpacity={fillOpacity}
+            points={pts}
+            fill="none"
             stroke={accent}
-            strokeOpacity={strokeOpacity}
-            strokeWidth={1.5}
+            strokeWidth={strokeWidth}
+            strokeOpacity={opacity}
+            strokeDasharray={dashArray !== 'none' ? dashArray : undefined}
           />
         );
       }
 
-      case 'ring':
+      case 'cross':
         return (
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={size / 2 - 2}
+          <>
+            <line x1={cx} y1={strokeWidth} x2={cx} y2={s - strokeWidth} stroke={accent} strokeWidth={strokeWidth} strokeOpacity={opacity} />
+            <line x1={strokeWidth} y1={cy} x2={s - strokeWidth} y2={cy} stroke={accent} strokeWidth={strokeWidth} strokeOpacity={opacity} />
+          </>
+        );
+
+      case 'arc':
+        return (
+          <path
+            d={`M ${cx - s / 3} ${cy + s / 4} Q ${cx} ${cy - s / 3} ${cx + s / 3} ${cy + s / 4}`}
             fill="none"
             stroke={accent}
-            strokeOpacity={strokeOpacity}
-            strokeWidth={2}
-            strokeDasharray={`${size * 0.25} ${size * 0.15}`}
+            strokeWidth={strokeWidth}
+            strokeOpacity={opacity}
+            strokeLinecap="round"
+          />
+        );
+
+      case 'spiral':
+        return (
+          <path
+            d={`M ${cx} ${cy} 
+                Q ${cx + s / 4} ${cy - s / 4} ${cx} ${cy - s / 3}
+                Q ${cx - s / 3} ${cy - s / 6} ${cx - s / 5} ${cy + s / 6}
+                Q ${cx - s / 10} ${cy + s / 4} ${cx + s / 6} ${cy + s / 4}`}
+            fill="none"
+            stroke={accent}
+            strokeWidth={strokeWidth}
+            strokeOpacity={opacity}
+            strokeLinecap="round"
           />
         );
 
@@ -202,14 +187,11 @@ function Shape({ config }: { config: ShapeConfig }) {
     }
   };
 
-  const containerSize = size + 10;
+  const containerSize = size + 6;
 
   return (
     <motion.div
-      animate={{
-        ...floatAnimation,
-        ...scaleAnimation,
-      }}
+      animate={floatAnimation}
       style={{
         position: 'absolute',
         left: `${x}%`,
@@ -218,7 +200,6 @@ function Shape({ config }: { config: ShapeConfig }) {
         height: containerSize,
         pointerEvents: 'none',
         zIndex: 0,
-        filter: blur > 0 ? `blur(${blur}px)` : undefined,
       }}
     >
       <motion.svg
@@ -237,88 +218,50 @@ function Shape({ config }: { config: ShapeConfig }) {
   );
 }
 
-// SVG para linhas conectoras entre formas
-function Connectors({ shapes, connectors }: { shapes: ShapeConfig[]; connectors: Connector[] }) {
+// Linhas conectoras finas entre formas proximas
+function WireConnectors({ shapes }: { shapes: WireShape[] }) {
+  const connectors = useMemo(() => {
+    const result: { from: WireShape; to: WireShape; id: string }[] = [];
+    for (let i = 0; i < shapes.length; i++) {
+      for (let j = i + 1; j < shapes.length; j++) {
+        const dx = shapes[i].x - shapes[j].x;
+        const dy = shapes[i].y - shapes[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 22 && (i + j) % 3 === 0) {
+          result.push({ from: shapes[i], to: shapes[j], id: `${i}-${j}` });
+        }
+      }
+    }
+    return result;
+  }, [shapes]);
+
   return (
-    <svg
-      className="absolute inset-0 w-full h-full"
-      style={{ pointerEvents: 'none', zIndex: 0 }}
-    >
-      {connectors.map((c, i) => {
-        const from = shapes[c.from];
-        const to = shapes[c.to];
-        return (
-          <motion.line
-            key={i}
-            x1={`${from.x}%`}
-            y1={`${from.y}%`}
-            x2={`${to.x}%`}
-            y2={`${to.y}%`}
-            stroke="#FFD527"
-            strokeWidth={0.6}
-            strokeOpacity={0.12}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0.06, 0.18, 0.06] }}
-            transition={{
-              duration: 5 + (i % 4),
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: i * 0.4,
-            }}
-          />
-        );
-      })}
+    <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none', zIndex: 0 }}>
+      {connectors.map((c) => (
+        <motion.line
+          key={c.id}
+          x1={`${c.from.x}%`}
+          y1={`${c.from.y}%`}
+          x2={`${c.to.x}%`}
+          y2={`${c.to.y}%`}
+          stroke="#FFD527"
+          strokeWidth={0.4}
+          strokeOpacity={0}
+          animate={{ strokeOpacity: [0.04, 0.15, 0.04] }}
+          transition={{
+            duration: 6 + (parseInt(c.id) % 5),
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: parseInt(c.id) * 0.3,
+          }}
+        />
+      ))}
     </svg>
   );
 }
 
-// Grid de pontos animados no fundo
-function AnimatedGrid() {
-  const dots = useMemo(() => {
-    const result: { x: number; y: number; delay: number }[] = [];
-    for (let row = 0; row < 6; row++) {
-      for (let col = 0; col < 8; col++) {
-        result.push({
-          x: 8 + col * 12,
-          y: 5 + row * 18,
-          delay: (row + col) * 0.3,
-        });
-      }
-    }
-    return result;
-  }, []);
-
-  return (
-    <div className="absolute inset-0" style={{ pointerEvents: 'none', zIndex: 0 }}>
-      {dots.map((dot, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            left: `${dot.x}%`,
-            top: `${dot.y}%`,
-            width: 2,
-            height: 2,
-            backgroundColor: '#FFD527',
-          }}
-          animate={{
-            opacity: [0.04, 0.22, 0.04],
-            scale: [1, 2.5, 1],
-          }}
-          transition={{
-            duration: 4 + (i % 3) * 1.5,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: dot.delay,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 export const GeometryBackground = () => {
-  const { shapes, connectors } = useMemo(() => generateShapes(32), []);
+  const shapes = useMemo(() => generateShapes(28), []);
 
   return (
     <div
@@ -326,25 +269,13 @@ export const GeometryBackground = () => {
       className="fixed inset-0 overflow-hidden"
       style={{ zIndex: 0, pointerEvents: 'none' }}
     >
-      {/* Grid de pontos base */}
-      <AnimatedGrid />
+      {/* Linhas conectoras */}
+      <WireConnectors shapes={shapes} />
 
-      {/* Linhas conectoras entre formas */}
-      <Connectors shapes={shapes} connectors={connectors} />
-
-      {/* Formas geometricas */}
+      {/* Formas wireframe */}
       {shapes.map((shape, i) => (
-        <Shape key={i} config={shape} />
+        <WireShape key={i} config={shape} />
       ))}
-
-      {/* Gradiente radial de fundo para profundidade */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(ellipse at 50% 0%, rgba(255,213,39,0.04) 0%, transparent 60%)',
-          pointerEvents: 'none',
-        }}
-      />
     </div>
   );
 };
