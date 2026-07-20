@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0a0a0b;
+  --color-background: #050303;
   --color-foreground: #e4e4e7;
-  --color-card: #141416;
-  --color-accent: #a78bfa;
-  --color-accent-light: #c4b5fd;
+  --color-card: #111111;
+  --color-accent: #FFD527;
+  --color-accent-light: #FFE066;
   --color-muted: #71717a;
   --font-sans: var(--font-inter);
 }
 
 body {
-  background: #0a0a0b;
+  background: #050303;
   color: #e4e4e7;
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -66,4 +66,51 @@ body {
   animation: scroll-reveal 0.8s ease-out both;
   animation-timeline: view();
   animation-range: entry 10% cover 30%;
+}
+
+/* ── ProjectCard wow animations ── */
+
+@keyframes glow-border {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(255, 213, 39, 0.08), 0 0 16px rgba(255, 213, 39, 0.04), inset 0 0 8px rgba(255, 213, 39, 0.04);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(255, 213, 39, 0.25), 0 0 36px rgba(255, 213, 39, 0.12), inset 0 0 12px rgba(255, 213, 39, 0.1);
+  }
+}
+
+@keyframes float-pill {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes icon-bounce {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+  60% {
+    transform: translateY(-1px);
+  }
+}
+
+.glow-border-animated {
+  animation: glow-border 3s ease-in-out infinite;
+}
+
+.animate-float-pill {
+  animation: float-pill 4s ease-in-out infinite;
+}
+
+.animate-icon-bounce {
+  animation: icon-bounce 3s ease-in-out infinite;
 }

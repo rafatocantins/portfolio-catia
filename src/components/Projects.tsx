@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { ProjectCard } from './ProjectCard';
 
 const projects = [
   {
@@ -35,14 +36,14 @@ const projects = [
 
 export const Projects = () => {
   return (
-    <section id="projects" className="py-24 px-6 bg-[#0a0a0b]">
+    <section id="projects" className="py-24 px-6 bg-[#050303]">
       <div className="max-w-6xl mx-auto">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-[#a78bfa] text-sm font-medium tracking-widest uppercase mb-4 text-center"
+          className="text-[#FFD527] text-sm font-medium tracking-widest uppercase mb-4 text-center"
         >
           Projects
         </motion.p>
@@ -59,44 +60,15 @@ export const Projects = () => {
 
         <div className="grid md:grid-cols-2 gap-6">
           {projects.map((project, index) => (
-            <motion.div
+            <ProjectCard
               key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-              className="group bg-[#141416] border border-white/5 rounded-xl overflow-hidden hover:border-[#a78bfa]/40 transition-all duration-300 cursor-pointer"
-            >
-              {/* Image placeholder */}
-              <div
-                className={`h-48 bg-gradient-to-br ${project.gradient} flex items-center justify-center`}
-              >
-                <span className="text-4xl opacity-40">🖥️</span>
-              </div>
-
-              <div className="p-6">
-                <span className="text-xs text-[#a78bfa] font-medium uppercase tracking-wider">
-                  {project.role}
-                </span>
-                <h3 className="text-xl font-semibold text-[#e4e4e7] mt-1 mb-2 group-hover:text-[#a78bfa] transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-[#71717a] mb-4">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-3 py-1 rounded-full bg-[#a78bfa]/10 text-[#a78bfa] border border-[#a78bfa]/20"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+              title={project.title}
+              role={project.role}
+              description={project.description}
+              tags={project.tags}
+              gradient={project.gradient}
+              index={index}
+            />
           ))}
         </div>
       </div>

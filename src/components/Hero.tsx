@@ -37,14 +37,14 @@ export const Hero = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Animated gradient background */}
-      <div className="absolute inset-0 bg-[#0a0a0b]" />
-      <div className="absolute inset-0 bg-gradient-to-br from-[#a78bfa]/10 via-transparent to-[#a78bfa]/5 animate-pulse" />
+      <div className="absolute inset-0 bg-[#050303]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#FFD527]/10 via-transparent to-[#FFD527]/5 animate-pulse" />
       <div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#a78bfa]/20 rounded-full blur-[128px] animate-pulse"
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#FFD527]/20 rounded-full blur-[128px] animate-pulse"
         style={{ animationDuration: '8s' }}
       />
       <div
-        className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#a78bfa]/15 rounded-full blur-[96px] animate-pulse"
+        className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#FFD527]/15 rounded-full blur-[96px] animate-pulse"
         style={{ animationDuration: '6s', animationDelay: '2s' }}
       />
 
@@ -56,7 +56,7 @@ export const Hero = () => {
       >
         <motion.p
           variants={itemVariants}
-          className="text-[#a78bfa] text-sm font-medium tracking-widest uppercase mb-6"
+          className="text-[#FFD527] text-sm font-medium tracking-widest uppercase mb-6"
         >
           Portfolio
         </motion.p>
@@ -70,7 +70,7 @@ export const Hero = () => {
 
         <motion.h2
           variants={itemVariants}
-          className="text-xl sm:text-2xl md:text-3xl font-medium text-[#a78bfa] mb-4"
+          className="text-xl sm:text-2xl md:text-3xl font-medium text-[#FFD527] mb-4"
         >
           User Experience Designer
         </motion.h2>
@@ -89,14 +89,14 @@ export const Hero = () => {
           <a
             href="#projects"
             onClick={(e) => handleSmoothScroll(e, '#projects')}
-            className="px-8 py-3 rounded-full bg-[#a78bfa] text-white font-medium hover:bg-[#9370e8] transition-colors text-sm"
+            className="px-8 py-3 rounded-full bg-[#FFD527] text-white font-medium hover:bg-[#FFC107] transition-colors text-sm"
           >
             View My Work
           </a>
           <a
             href="#contact"
             onClick={(e) => handleSmoothScroll(e, '#contact')}
-            className="px-8 py-3 rounded-full border border-[#a78bfa]/30 text-[#a78bfa] font-medium hover:bg-[#a78bfa]/10 transition-colors text-sm"
+            className="px-8 py-3 rounded-full border border-[#FFD527]/30 text-[#FFD527] font-medium hover:bg-[#FFD527]/10 transition-colors text-sm"
           >
             Get In Touch
           </a>

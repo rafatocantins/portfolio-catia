@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
+  { label: 'Projects', href: '/projects' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -36,7 +37,7 @@ export const Navbar = () => {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#0a0a0b]/90 backdrop-blur-md border-b border-white/5 py-3'
+          ? 'bg-[#050303]/90 backdrop-blur-md border-b border-white/5 py-3'
           : 'bg-transparent py-5'
       }`}
     >
@@ -44,7 +45,7 @@ export const Navbar = () => {
         <a
           href="#hero"
           onClick={(e) => handleSmoothScroll(e, '#hero')}
-          className="text-[#e4e4e7] font-semibold text-lg tracking-tight hover:text-[#a78bfa] transition-colors"
+          className="text-[#e4e4e7] font-semibold text-lg tracking-tight hover:text-[#FFD527] transition-colors"
         >
           Catia Carvalho
         </a>
@@ -52,13 +53,22 @@ export const Navbar = () => {
         <ul className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <a
-                href={link.href}
-                onClick={(e) => handleSmoothScroll(e, link.href)}
-                className="text-[#71717a] hover:text-[#e4e4e7] transition-colors text-sm font-medium"
-              >
-                {link.label}
-              </a>
+              {link.href.startsWith('#') ? (
+                <a
+                  href={link.href}
+                  onClick={(e) => handleSmoothScroll(e, link.href)}
+                  className="text-[#71717a] hover:text-[#e4e4e7] transition-colors text-sm font-medium"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  href={link.href}
+                  className="text-[#71717a] hover:text-[#e4e4e7] transition-colors text-sm font-medium"
+                >
+                  {link.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>

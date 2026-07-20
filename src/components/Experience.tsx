@@ -32,14 +32,14 @@ const experiences = [
 
 export const Experience = () => {
   return (
-    <section id="experience" className="py-24 px-6 bg-[#0a0a0b]">
+    <section id="experience" className="py-24 px-6 bg-[#050303]">
       <div className="max-w-3xl mx-auto">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-[#a78bfa] text-sm font-medium tracking-widest uppercase mb-4 text-center"
+          className="text-[#FFD527] text-sm font-medium tracking-widest uppercase mb-4 text-center"
         >
           Experience
         </motion.p>
@@ -57,7 +57,7 @@ export const Experience = () => {
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-[#a78bfa]/20" />
+          <div className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-[#FFD527]/20" />
 
           <div className="space-y-12">
             {experiences.map((exp, index) => (
@@ -75,12 +75,12 @@ export const Experience = () => {
               >
                 {/* Dot */}
                 <div
-                  className={`absolute top-1 left-2 md:left-1/2 md:-translate-x-1/2 w-[13px] h-[13px] rounded-full bg-[#a78bfa] border-2 border-[#0a0a0b] z-10`}
+                  className={`absolute top-1 left-2 md:left-1/2 md:-translate-x-1/2 w-[13px] h-[13px] rounded-full bg-[#FFD527] border-2 border-[#050303] z-10`}
                 />
 
                 {/* Card */}
-                <div className="bg-[#141416] border border-white/5 rounded-xl p-5 hover:border-[#a78bfa]/20 transition-colors">
-                  <span className="inline-block text-xs text-[#a78bfa] font-medium mb-2">
+                <div className="bg-[#111111] border border-white/5 rounded-xl p-5 hover:border-[#FFD527]/20 transition-colors">
+                  <span className="inline-block text-xs text-[#FFD527] font-medium mb-2">
                     {exp.period}
                   </span>
                   <h3 className="text-lg font-semibold text-[#e4e4e7] mb-1">

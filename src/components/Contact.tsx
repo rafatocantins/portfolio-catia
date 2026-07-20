@@ -6,14 +6,14 @@ import { FaLinkedinIn, FaBehance, FaEnvelope } from 'react-icons/fa';
 export const Contact = () => {
   return (
     <>
-      <section id="contact" className="py-24 px-6 bg-[#0a0a0b]">
+      <section id="contact" className="py-24 px-6 bg-[#050303]">
         <div className="max-w-2xl mx-auto text-center">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-[#a78bfa] text-sm font-medium tracking-widest uppercase mb-4"
+            className="text-[#FFD527] text-sm font-medium tracking-widest uppercase mb-4"
           >
             Contact
           </motion.p>
@@ -48,9 +48,9 @@ export const Contact = () => {
           >
             <a
               href="mailto:catiacarvalho.info@gmail.com"
-              className="flex items-center gap-3 px-6 py-3 rounded-full bg-[#141416] border border-white/5 text-[#e4e4e7] hover:border-[#a78bfa]/30 hover:text-[#a78bfa] transition-all"
+              className="flex items-center gap-3 px-6 py-3 rounded-full bg-[#111111] border border-white/5 text-[#e4e4e7] hover:border-[#FFD527]/30 hover:text-[#FFD527] transition-all"
             >
-              <FaEnvelope className="text-[#a78bfa]" />
+              <FaEnvelope className="text-[#FFD527]" />
               <span className="text-sm">catiacarvalho.info@gmail.com</span>
             </a>
           </motion.div>
@@ -67,7 +67,7 @@ export const Contact = () => {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-[#141416] border border-white/5 flex items-center justify-center text-[#71717a] hover:text-[#a78bfa] hover:border-[#a78bfa]/30 transition-all"
+              className="w-12 h-12 rounded-full bg-[#111111] border border-white/5 flex items-center justify-center text-[#71717a] hover:text-[#FFD527] hover:border-[#FFD527]/30 transition-all"
               aria-label="LinkedIn"
             >
               <FaLinkedinIn className="text-lg" />
@@ -76,7 +76,7 @@ export const Contact = () => {
               href="https://behance.net"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-[#141416] border border-white/5 flex items-center justify-center text-[#71717a] hover:text-[#a78bfa] hover:border-[#a78bfa]/30 transition-all"
+              className="w-12 h-12 rounded-full bg-[#111111] border border-white/5 flex items-center justify-center text-[#71717a] hover:text-[#FFD527] hover:border-[#FFD527]/30 transition-all"
               aria-label="Behance"
             >
               <FaBehance className="text-lg" />
@@ -86,7 +86,7 @@ export const Contact = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 border-t border-white/5 bg-[#0a0a0b]">
+      <footer className="py-8 px-6 border-t border-white/5 bg-[#050303]">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-[#71717a]">
             &copy; {new Date().getFullYear()} Catia Carvalho. All rights

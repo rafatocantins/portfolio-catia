@@ -31,14 +31,14 @@ const skills = [
 
 export const Skills = () => {
   return (
-    <section id="skills" className="py-24 px-6 bg-[#0a0a0b]">
+    <section id="skills" className="py-24 px-6 bg-[#050303]">
       <div className="max-w-4xl mx-auto">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-[#a78bfa] text-sm font-medium tracking-widest uppercase mb-4 text-center"
+          className="text-[#FFD527] text-sm font-medium tracking-widest uppercase mb-4 text-center"
         >
           Skills
         </motion.p>
@@ -56,6 +56,7 @@ export const Skills = () => {
         <div className="flex flex-wrap justify-center gap-3">
           {skills.map((skill, index) => {
             const Icon = skill.icon;
+            const randomDelay = ((index * 0.37 + index * 0.13) % 4).toFixed(1);
             return (
               <motion.div
                 key={skill.name}
@@ -63,10 +64,14 @@ export const Skills = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                whileHover={{ scale: 1.05, y: -2 }}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#141416] border border-white/5 hover:border-[#a78bfa]/30 transition-colors cursor-default"
+                whileHover={{ scale: 1.1, y: -2 }}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#111111] border border-white/5
+                           hover:border-[#FFD527]/50 hover:shadow-[0_0_20px_rgba(255,213,39,0.3),0_0_40px_rgba(255,213,39,0.1)]
+                           transition-all duration-300 cursor-default animate-float-pill"
+                style={{ animationDelay: `${randomDelay}s` } as React.CSSProperties}
               >
-                <Icon className="text-[#a78bfa] text-sm" />
+                <Icon className="text-[#FFD527] text-sm animate-icon-bounce
+                                 group-hover:animate-icon-bounce" />
                 <span className="text-sm text-[#e4e4e7] font-medium">
                   {skill.name}
                 </span>

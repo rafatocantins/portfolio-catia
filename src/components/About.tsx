@@ -10,7 +10,7 @@ const stats = [
 
 export const About = () => {
   return (
-    <section id="about" className="py-24 px-6 bg-[#0a0a0b]">
+    <section id="about" className="py-24 px-6 bg-[#050303]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ export const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-[#a78bfa] text-sm font-medium tracking-widest uppercase mb-4 text-center"
+          className="text-[#FFD527] text-sm font-medium tracking-widest uppercase mb-4 text-center"
         >
           About
         </motion.p>
@@ -47,7 +47,7 @@ export const About = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex justify-center"
           >
-            <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-2xl bg-gradient-to-br from-[#a78bfa]/30 to-[#a78bfa]/5 border border-[#a78bfa]/10 flex items-center justify-center">
+            <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-2xl bg-gradient-to-br from-[#FFD527]/30 to-[#FFD527]/5 border border-[#FFD527]/10 flex items-center justify-center">
               <span className="text-6xl">👩‍💻</span>
             </div>
           </motion.div>
@@ -69,9 +69,9 @@ export const About = () => {
               {stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="text-center p-4 rounded-xl bg-[#141416] border border-white/5"
+                  className="text-center p-4 rounded-xl bg-[#111111] border border-white/5"
                 >
-                  <div className="text-2xl font-bold text-[#a78bfa] mb-1">
+                  <div className="text-2xl font-bold text-[#FFD527] mb-1">
                     {stat.value}
                   </div>
                   <div className="text-xs text-[#71717a]">{stat.label}</div>
