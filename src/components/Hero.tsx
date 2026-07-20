@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { HeroWireframe } from './HeroWireframe';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -85,6 +86,9 @@ export const Hero = () => {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050303]"
     >
+      {/* Wireframe geometric shapes */}
+      <HeroWireframe />
+
       {/* SVG geometric grid background with perspective */}
       <svg
         className="absolute inset-0 w-full h-full"
