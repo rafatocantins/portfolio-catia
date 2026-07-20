@@ -47,8 +47,12 @@ export const About = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex justify-center"
           >
-            <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-2xl bg-gradient-to-br from-[#FFD527]/30 to-[#FFD527]/5 border border-[#FFD527]/15 flex items-center justify-center">
-              <span className="text-6xl">👩‍💻</span>
+            <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-2xl overflow-hidden border-2 border-[#FFD527]/30 shadow-lg shadow-[#FFD527]/10">
+              <img
+                src="/portfolio-catia/catia-avatar.jpg"
+                alt="Catia Carvalho"
+                className="w-full h-full object-cover"
+              />
             </div>
           </motion.div>
 
