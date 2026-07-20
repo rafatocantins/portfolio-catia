@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -24,7 +24,7 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 40);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -35,9 +35,9 @@ export const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
         scrolled
-          ? 'bg-[#050303]/90 backdrop-blur-md border-b border-white/5 py-3'
+          ? 'bg-[#050303]/95 backdrop-blur-xl border-b border-[#FFD527]/10 shadow-[0_1px_20px_rgba(0,0,0,0.5)] py-3'
           : 'bg-transparent py-5'
       }`}
     >
@@ -45,37 +45,47 @@ export const Navbar = () => {
         <a
           href="#hero"
           onClick={(e) => handleSmoothScroll(e, '#hero')}
-          className="text-[#e4e4e7] font-semibold text-lg tracking-tight hover:text-[#FFD527] transition-colors"
+          className="text-[#FFFFFF] font-bold text-lg tracking-tight hover:text-[#FFD527] transition-colors duration-300"
         >
           Catia Carvalho
         </a>
 
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
-            <li key={link.href}>
+            <li key={link.href} className="relative">
               {link.href.startsWith('#') ? (
                 <a
                   href={link.href}
                   onClick={(e) => handleSmoothScroll(e, link.href)}
-                  className="text-[#71717a] hover:text-[#e4e4e7] transition-colors text-sm font-medium"
+                  className="group relative text-[#a1a1aa] hover:text-[#FFFFFF] transition-colors duration-300 text-sm font-medium py-2"
                 >
                   {link.label}
+                  {/* Geometric underline that grows from center */}
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#FFD527]
+                                   group-hover:w-full transition-all duration-300 ease-out" />
+                  {/* Subtle diamond accent on hover */}
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#FFD527] rotate-45
+                                   opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-0 group-hover:scale-100" />
                 </a>
               ) : (
                 <Link
                   href={link.href}
-                  className="text-[#71717a] hover:text-[#e4e4e7] transition-colors text-sm font-medium"
+                  className="group relative text-[#a1a1aa] hover:text-[#FFFFFF] transition-colors duration-300 text-sm font-medium py-2"
                 >
                   {link.label}
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#FFD527]
+                                   group-hover:w-full transition-all duration-300 ease-out" />
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#FFD527] rotate-45
+                                   opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-0 group-hover:scale-100" />
                 </Link>
               )}
             </li>
           ))}
         </ul>
 
-        {/* Mobile menu button placeholder */}
+        {/* Mobile menu button */}
         <button
-          className="md:hidden text-[#e4e4e7] p-2"
+          className="md:hidden text-[#FFFFFF] p-2 hover:text-[#FFD527] transition-colors"
           aria-label="Toggle menu"
         >
           <svg

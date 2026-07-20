@@ -32,14 +32,14 @@ const experiences = [
 
 export const Experience = () => {
   return (
-    <section id="experience" className="py-24 px-6 bg-[#050303]">
+    <section id="experience" className="py-28 px-6 bg-[#050303]">
       <div className="max-w-3xl mx-auto">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-[#FFD527] text-sm font-medium tracking-widest uppercase mb-4 text-center"
+          className="text-[#FFD527] text-sm font-semibold tracking-[0.3em] uppercase mb-4 text-center"
         >
           Experience
         </motion.p>
@@ -49,7 +49,7 @@ export const Experience = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold text-[#e4e4e7] mb-16 text-center"
+          className="text-3xl md:text-4xl font-bold text-[#FFFFFF] mb-16 text-center"
         >
           Where I have worked
         </motion.h2>
@@ -75,18 +75,18 @@ export const Experience = () => {
               >
                 {/* Dot */}
                 <div
-                  className={`absolute top-1 left-2 md:left-1/2 md:-translate-x-1/2 w-[13px] h-[13px] rounded-full bg-[#FFD527] border-2 border-[#050303] z-10`}
+                  className="absolute top-1 left-2 md:left-1/2 md:-translate-x-1/2 w-[13px] h-[13px] rounded-full bg-[#FFD527] border-2 border-[#050303] z-10"
                 />
 
                 {/* Card */}
-                <div className="bg-[#111111] border border-white/5 rounded-xl p-5 hover:border-[#FFD527]/20 transition-colors">
-                  <span className="inline-block text-xs text-[#FFD527] font-medium mb-2">
+                <div className="bg-[#0a0a0a] border border-[#FFD527]/15 rounded-xl p-5 hover:border-[#FFD527]/30 transition-colors duration-300">
+                  <span className="inline-block text-xs text-[#FFD527] font-semibold mb-2 tracking-wide">
                     {exp.period}
                   </span>
-                  <h3 className="text-lg font-semibold text-[#e4e4e7] mb-1">
+                  <h3 className="text-lg font-semibold text-[#FFFFFF] mb-1">
                     {exp.company}
                   </h3>
-                  <p className="text-sm text-[#71717a]">{exp.role}</p>
+                  <p className="text-sm text-[#a1a1aa]">{exp.role}</p>
                 </div>
               </motion.div>
             ))}

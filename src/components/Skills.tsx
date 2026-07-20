@@ -31,14 +31,14 @@ const skills = [
 
 export const Skills = () => {
   return (
-    <section id="skills" className="py-24 px-6 bg-[#050303]">
+    <section id="skills" className="py-28 px-6 bg-[#050303]">
       <div className="max-w-4xl mx-auto">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-[#FFD527] text-sm font-medium tracking-widest uppercase mb-4 text-center"
+          className="text-[#FFD527] text-sm font-semibold tracking-[0.3em] uppercase mb-4 text-center"
         >
           Skills
         </motion.p>
@@ -48,7 +48,7 @@ export const Skills = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold text-[#e4e4e7] mb-16 text-center"
+          className="text-3xl md:text-4xl font-bold text-[#FFFFFF] mb-16 text-center"
         >
           What I bring to the table
         </motion.h2>
@@ -56,23 +56,22 @@ export const Skills = () => {
         <div className="flex flex-wrap justify-center gap-3">
           {skills.map((skill, index) => {
             const Icon = skill.icon;
-            const randomDelay = ((index * 0.37 + index * 0.13) % 4).toFixed(1);
             return (
               <motion.div
                 key={skill.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                whileHover={{ scale: 1.1, y: -2 }}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#111111] border border-white/5
-                           hover:border-[#FFD527]/50 hover:shadow-[0_0_20px_rgba(255,213,39,0.3),0_0_40px_rgba(255,213,39,0.1)]
-                           transition-all duration-300 cursor-default animate-float-pill"
-                style={{ animationDelay: `${randomDelay}s` } as React.CSSProperties}
+                transition={{ duration: 0.5, delay: index * 0.06, ease: 'easeOut' }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                className="flex items-center gap-2.5 px-5 py-3 rounded-full
+                           bg-[#FFD527]/10 border border-[#FFD527]/30
+                           hover:bg-[#FFD527]/20 hover:border-[#FFD527]/50
+                           hover:shadow-[0_0_15px_rgba(255,213,39,0.2)]
+                           transition-all duration-300 cursor-default"
               >
-                <Icon className="text-[#FFD527] text-sm animate-icon-bounce
-                                 group-hover:animate-icon-bounce" />
-                <span className="text-sm text-[#e4e4e7] font-medium">
+                <Icon className="text-[#FFD527] text-base" />
+                <span className="text-sm text-[#FFFFFF] font-medium">
                   {skill.name}
                 </span>
               </motion.div>

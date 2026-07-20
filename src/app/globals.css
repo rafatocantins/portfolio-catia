@@ -2,31 +2,41 @@
 
 @theme {
   --color-background: #050303;
-  --color-foreground: #e4e4e7;
-  --color-card: #111111;
+  --color-foreground: #E4E4E7;
+  --color-card: #0A0A0A;
   --color-accent: #FFD527;
   --color-accent-light: #FFE066;
-  --color-muted: #71717a;
+  --color-muted: #A1A1AA;
   --font-sans: var(--font-inter);
 }
 
 body {
   background: #050303;
-  color: #e4e4e7;
+  color: #E4E4E7;
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Custom animations ── */
+/* ---------- Custom animations ---------- */
 
 @keyframes float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px);
   }
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.03;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.06;
+    transform: scale(1.05);
   }
 }
 
@@ -53,6 +63,11 @@ body {
   }
 }
 
+/* Transition duration utility */
+.transition-duration-400 {
+  transition-duration: 400ms;
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -66,51 +81,4 @@ body {
   animation: scroll-reveal 0.8s ease-out both;
   animation-timeline: view();
   animation-range: entry 10% cover 30%;
-}
-
-/* ── ProjectCard wow animations ── */
-
-@keyframes glow-border {
-  0%,
-  100% {
-    box-shadow: 0 0 8px rgba(255, 213, 39, 0.08), 0 0 16px rgba(255, 213, 39, 0.04), inset 0 0 8px rgba(255, 213, 39, 0.04);
-  }
-  50% {
-    box-shadow: 0 0 18px rgba(255, 213, 39, 0.25), 0 0 36px rgba(255, 213, 39, 0.12), inset 0 0 12px rgba(255, 213, 39, 0.1);
-  }
-}
-
-@keyframes float-pill {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes icon-bounce {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  40% {
-    transform: translateY(-3px);
-  }
-  60% {
-    transform: translateY(-1px);
-  }
-}
-
-.glow-border-animated {
-  animation: glow-border 3s ease-in-out infinite;
-}
-
-.animate-float-pill {
-  animation: float-pill 4s ease-in-out infinite;
-}
-
-.animate-icon-bounce {
-  animation: icon-bounce 3s ease-in-out infinite;
 }
